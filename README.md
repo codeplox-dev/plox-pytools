@@ -1,8 +1,6 @@
-# plox-version
+# plox-tools
 
-Available in test PyPI:
-
-https://test.pypi.org/project/plox-version/
+TODO
 
 ## Developing
 
