@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "plox-tools"
+version = "0.0.0"
+description = "A simple package that houses simple utilities for dealing with common tasks."
+authors = [
+    "bigpick",
+]
+maintainers = ["bigpick", "Mike <mike@codeplox.dev"]
+exclude = [ "**/test/*",]
+readme = "README.md"
+classifiers = [
+  # How mature is this project? Common values are
+  #   3 - Alpha
+  #   4 - Beta
+  #   5 - Production/Stable
+  "Development Status :: 4 - Beta",
+
+  # Indicate who your project is intended for
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+
+  # Pick your license as you wish (see also "license" above)
+  "License :: OSI Approved :: BSD 2-Clause \"Simplified\" License (BSD-2-Clause)",
+
+  # Specify the Python versions you support here.
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+
+[[tool.poetry.packages]]
+include = "plox_tools"
+from = "src"
+
+[[tool.poetry.include]]
+path = "src"
+format = "sdist"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+
+[tool.poetry.dev-dependencies]
+pyright = "*"
+ruff = "*"
+pytest = "*"
+pylint = "*"
+mypy = "*"
+detect-secrets = { git = "https://github.com/ibm/detect-secrets.git", tag = "0.13.1+ibm.62.dss" }
+
+[build-system]
+requires = [ "poetry-core>=1.0.0",]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+python_files = "*test*.py"
+markers = [ "integration: marks tests that have external dependencies (deselect with \"-m 'not integration'\")",]
+log_cli = true
+log_cli_level = "DEBUG"

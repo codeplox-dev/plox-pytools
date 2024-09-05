@@ -1,0 +1,140 @@
+name: Code
+
+on: push
+
+jobs:
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: make
+        shell: bash
+        run: |
+          sudo apt-get update &>/dev/null
+          sudo apt-get install -yq direnv make &>/dev/null
+          direnv allow . && eval "$(direnv export bash)"
+          make type-check
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: make
+        shell: bash
+        run: |
+          sudo apt-get update &>/dev/null
+          sudo apt-get install -yq direnv make &>/dev/null
+          direnv allow . && eval "$(direnv export bash)"
+          make lint
+
+  test-unit:
+    runs-on: [ ubuntu-latest, macos-latest ]
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: make
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ] ; then
+            sudo apt-get update &>/dev/null
+            sudo apt-get install -yq direnv make &>/dev/null
+          elif [ "$RUNNER_OS" == "macOS" ] ; then
+            brew install make direnv
+            shopt -s expand_aliases
+            alias make=gmake
+          done
+          direnv allow . && eval "$(direnv export bash)"
+          make test-unit
+  test-integration:
+    runs-on: [ ubuntu-latest, macos-latest ]
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: make
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ] ; then
+            sudo apt-get update &>/dev/null
+            sudo apt-get install -yq direnv git make &>/dev/null
+          elif [ "$RUNNER_OS" == "macOS" ] ; then
+            brew install make direnv git
+            shopt -s expand_aliases
+            alias make=gmake
+          done
+          git config --global init.defaultBranch main
+          git config --global user.email urmom@fake.com
+          git config --global user.name "Your mom"
+          direnv allow . && eval "$(direnv export bash)"
+          make test-integration
+
+  publish:
+    needs: [test-unit, test-integration, mypy, lint]
+    if: always() && !cancelled() && !contains(needs.*.result, 'failure')
+    runs-on: [ ubuntu-latest, macos-latest ]
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    env:
+      BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: make
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ] ; then
+            sudo apt-get update &>/dev/null
+            sudo apt-get install -yq direnv git make &>/dev/null
+          elif [ "$RUNNER_OS" == "macOS" ] ; then
+            brew install make direnv git
+            shopt -s expand_aliases
+            alias make=gmake
+          done
+          git config --global init.defaultBranch main
+          git config --global user.email urmom@fake.com
+          git config --global user.name "Your mom"
+          direnv allow . && eval "$(direnv export bash)"
+          # TODO: uncomment when ready
+          # make publish
+

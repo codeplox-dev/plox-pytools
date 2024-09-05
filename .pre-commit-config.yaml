@@ -1,0 +1,25 @@
+repos:
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.6.2
+  hooks:
+    # Run the linter.
+    - id: ruff
+      files: ^src|^test
+    # Run the formatter.
+    - id: ruff-format
+      args: [--check]
+      files: ^src|^test
+
+- repo: https://github.com/ibm/detect-secrets
+  rev: 0.13.1+ibm.62.dss
+  hooks:
+    - id: detect-secrets # pragma: whitelist secret
+      args: [--baseline, .secrets.baseline, --use-all-plugins]
+
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.2
+    hooks:
+    -   id: mypy
+        exclude: "test/.*|plox-common/.*"
+        args: ["--config-file", "mypy.ini"]
+        additional_dependencies: []
