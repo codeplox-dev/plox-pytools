@@ -46,9 +46,10 @@ jobs:
           make lint
 
   test-unit:
-    runs-on: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
       - name: Checkout repo
@@ -74,9 +75,10 @@ jobs:
           direnv allow . && eval "$(direnv export bash)"
           make test-unit
   test-integration:
-    runs-on: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
       - name: Checkout repo
@@ -108,7 +110,7 @@ jobs:
   publish:
     needs: [test-unit, test-integration, mypy, lint]
     if: always() && !cancelled() && !contains(needs.*.result, 'failure')
-    runs-on: [ ubuntu-latest, macos-latest ]
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
