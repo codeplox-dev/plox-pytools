@@ -71,7 +71,7 @@ jobs:
             brew install make direnv
             shopt -s expand_aliases
             alias make=gmake
-          done
+          fi
           direnv allow . && eval "$(direnv export bash)"
           make test-unit
   test-integration:
@@ -100,7 +100,7 @@ jobs:
             brew install make direnv git
             shopt -s expand_aliases
             alias make=gmake
-          done
+          fi
           git config --global init.defaultBranch main
           git config --global user.email urmom@fake.com
           git config --global user.name "Your mom"
@@ -136,7 +136,7 @@ jobs:
             brew install make direnv git
             shopt -s expand_aliases
             alias make=gmake
-          done
+          fi
           git config --global init.defaultBranch main
           git config --global user.email urmom@fake.com
           git config --global user.name "Your mom"
