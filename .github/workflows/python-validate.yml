@@ -2,6 +2,10 @@ name: Code
 
 on: push
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   mypy:
     runs-on: ubuntu-latest
@@ -42,10 +46,11 @@ jobs:
           make lint
 
   test-unit:
-    runs-on: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -66,14 +71,15 @@ jobs:
             brew install make direnv
             shopt -s expand_aliases
             alias make=gmake
-          done
+          fi
           direnv allow . && eval "$(direnv export bash)"
           make test-unit
   test-integration:
-    runs-on: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -94,7 +100,7 @@ jobs:
             brew install make direnv git
             shopt -s expand_aliases
             alias make=gmake
-          done
+          fi
           git config --global init.defaultBranch main
           git config --global user.email urmom@fake.com
           git config --global user.name "Your mom"
@@ -104,10 +110,13 @@ jobs:
   publish:
     needs: [test-unit, test-integration, mypy, lint]
     if: always() && !cancelled() && !contains(needs.*.result, 'failure')
-    runs-on: [ ubuntu-latest, macos-latest ]
-    strategy:
-      matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    runs-on: ubuntu-latest
+    permissions:
+      issues: read
+      contents: read
+      pull-requests: read
+      statuses: read
+      checks: read
     env:
       BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
     steps:
@@ -116,25 +125,26 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.12
+      - name: Get Pull Request Number
+        id: pr
+        run: echo "pull_request_number=$(gh pr view --json number -q .number || echo "")" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: make
         shell: bash
+        env:
+          GH_PR_NUMBER: ${{ steps.pr.outputs.pull_request_number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [ "$RUNNER_OS" == "Linux" ] ; then
-            sudo apt-get update &>/dev/null
-            sudo apt-get install -yq direnv git make &>/dev/null
-          elif [ "$RUNNER_OS" == "macOS" ] ; then
-            brew install make direnv git
-            shopt -s expand_aliases
-            alias make=gmake
-          done
+          sudo apt-get update &>/dev/null
+          sudo apt-get install -yq direnv git make &>/dev/null
           git config --global init.defaultBranch main
           git config --global user.email urmom@fake.com
           git config --global user.name "Your mom"
           direnv allow . && eval "$(direnv export bash)"
-          # TODO: uncomment when ready
-          # make publish
+          make publish
 
