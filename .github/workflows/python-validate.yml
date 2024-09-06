@@ -111,8 +111,6 @@ jobs:
     needs: [test-unit, test-integration, mypy, lint]
     if: always() && !cancelled() && !contains(needs.*.result, 'failure')
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: read
     env:
       BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
     steps:
