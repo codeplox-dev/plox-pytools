@@ -138,6 +138,7 @@ jobs:
         shell: bash
         env:
           GH_PR_NUMBER: ${{ steps.pr.outputs.pull_request_number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           sudo apt-get update &>/dev/null
           sudo apt-get install -yq direnv git make &>/dev/null
