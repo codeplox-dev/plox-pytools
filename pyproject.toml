@@ -40,7 +40,7 @@ path = "src"
 format = "sdist"
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = ">=3.9, <4"
 
 [tool.poetry.dev-dependencies]
 pyright = "*"

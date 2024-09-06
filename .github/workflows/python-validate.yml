@@ -111,9 +111,6 @@ jobs:
     needs: [test-unit, test-integration, mypy, lint]
     if: always() && !cancelled() && !contains(needs.*.result, 'failure')
     runs-on: ubuntu-latest
-    #strategy:
-    #  matrix:
-    #    python-version: ["3.9", "3.10", "3.11", "3.12"]
     env:
       BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
     steps:
@@ -129,18 +126,10 @@ jobs:
       - name: make
         shell: bash
         run: |
-          if [ "$RUNNER_OS" == "Linux" ] ; then
-            sudo apt-get update &>/dev/null
-            sudo apt-get install -yq direnv git make &>/dev/null
-          elif [ "$RUNNER_OS" == "macOS" ] ; then
-            brew install make direnv git
-            shopt -s expand_aliases
-            alias make=gmake
-          fi
+          sudo apt-get update &>/dev/null
+          sudo apt-get install -yq direnv git make &>/dev/null
           git config --global init.defaultBranch main
           git config --global user.email urmom@fake.com
           git config --global user.name "Your mom"
           direnv allow . && eval "$(direnv export bash)"
-          # TODO: uncomment when ready
-          # make publish
-
+          make publish

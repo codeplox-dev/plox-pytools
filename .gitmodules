@@ -1,3 +1,4 @@
 [submodule "plox-common"]
 	path = plox-common
 	url = ../plox-common
+	branch = "major-py-pub-rework-1"
