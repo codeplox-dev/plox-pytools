@@ -32,15 +32,12 @@ classifiers = [
 ]
 
 [[tool.poetry.packages]]
-include = "plox_tools"
-from = "src"
-
-[[tool.poetry.include]]
-path = "src"
-format = "sdist"
+include = "*"
+from = "plox"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <4"
+pick = "*"
 
 [tool.poetry.dev-dependencies]
 pyright = "*"
