@@ -23,7 +23,7 @@ from typing import Any, Callable, Optional, TypeVar
 
 logger = getLogger(__name__)
 
-_T = TypeVar("T")
+_T = TypeVar("_T")
 TupleVal = tuple[str, Optional[str], str]
 
 
@@ -251,10 +251,10 @@ def window_iterator(seq: Iterable[_T], n: int = 2) -> Generator[tuple[_T, ...], 
     seq_size = sum(1 for _ in seq)
     it = iter(seq)
     if n > seq_size:
-        yield tuple(islice(it, seq_size))  # type: ignore
+        yield tuple(islice(it, seq_size))
     result = tuple(islice(it, n))
     if len(result) == n:
-        yield result  # type: ignore
+        yield result
     for elem in it:
         result = result[1:] + (elem,)
-        yield result  # type: ignore
+        yield result
