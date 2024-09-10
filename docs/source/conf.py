@@ -90,26 +90,17 @@ nitpicky = True
 
 sys.path.append(os.path.join(os.path.dirname(__name__), ".."))
 
+nitpick_ignore = {
+    ("py:class", "_T"),
+    ("py:class", "TupleVal"),
+    ("py:class", "plox.tools.files.FilePath")
+}
+
 def skip_submodules(app, what, name, obj, skip, options):
     if what == "data" and any(x in name for x in {"logger", "TupleVal"}):
         skip = True
     return skip
 
-# TYPE_ALIASES = ["FilePath"]
-#
-# def resolve_type_aliases(app, env, node, contnode):
-#     """Resolve :class: references to our type aliases as :attr: instead."""
-#     if (
-#         node["refdomain"] == "py"
-#         and node["reftype"] == "class"
-#         and node["reftarget"] in TYPE_ALIASES
-#     ):
-#         return app.env.get_domain("py").resolve_xref(
-#             env, node["refdoc"], app.builder, "attr", node["reftarget"], node, contnode
-#         )
-
-
 def setup(sphinx):
-    # sphinx.connect("missing-reference", resolve_type_aliases)
     sphinx.connect("autoapi-skip-member", skip_submodules)
 
