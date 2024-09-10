@@ -23,9 +23,9 @@ def _join_logging_thread(log_fn: Callable[..., None], pipe: Optional[IO[str]]) -
     """Join an existing logging function running in a thread to current stream.
 
     Args:
-        log_fn (Callable[..., None]): Function that is responsible for logging
+        log_fn (typing.Callable[..., None]): Function that is responsible for logging
             output that will be collected.
-        pipe (IO[str]): Pipe that should be logged to.
+        pipe (typing.IO[str]): Pipe that should be logged to.
     """
     th = Thread(target=log_fn, args=[pipe])
     th.start()
@@ -38,7 +38,7 @@ def _process_out(level: int, prefix: str, cap_dest: Optional[Path], pipe: IO[str
     Args:
         level (int): Log level
         prefix (str): Prefix to included to every logged message's beginning.
-        cap_dest (Optional[Path]): Optional path on disk to store captured
+        cap_dest (typing.Optional[Path]): Optional path on disk to store captured
             text to. By default, is not captured to file.
         pipe (IO[str]): Pipe that is being logged to.
     """
@@ -82,16 +82,16 @@ def sys_exec(
     """Execute a system command, threaded logging safe.
 
     Args:
-        cwd (Path): Current directory that command is being invoked from.
-        executable (Path): Path to local binary that should be excecuted.
-        exec_args (list[str]): List of args to pass to the executable.
-        environment (dict[Any, Any]): Dictionary of k:v pairings to pass to
+        cwd: Current directory that command is being invoked from.
+        executable: Path to local binary that should be excecuted.
+        exec_args: List of args to pass to the executable.
+        environment: Dictionary of k:v pairings to pass to
             the executable process' environment.
-        stdout_file_dest (Optional[Path]): Optional file to log output text to.
+        stdout_file_dest: Optional file to log output text to.
             By default, does not log to file.
-        quiet_stderr (bool): Whether or not stderr output should be silenced.
+        quiet_stderr: Whether or not stderr output should be silenced.
             By default, stderr is **not** silenced.
-        exec_timeout_mins (int): Time in minutes before command is timed out.
+        exec_timeout_mins: Time in minutes before command is timed out.
             By default, is 24 minutes.
 
     Returns:
@@ -131,15 +131,15 @@ def sync_command(
     """Executed a system command.
 
     Args:
-        cmd (str): Command to execute on host.
-        shell (bool): Whether or not to execute the command as passed, or
+        cmd: Command to execute on host.
+        shell: Whether or not to execute the command as passed, or
             if should be tokenized and passed as list of values to subprocess.
             By default, passed command is split for safety.
-        exit_on_error (bool): Whether or not hard exit should occur if process
+        exit_on_error: Whether or not hard exit should occur if process
             does not return successfully. By default, false.
 
     Returns:
-        CompletedProcess[bytes]: The completed process.
+        subprocess.CompletedProcess[bytes]: The completed process.
     """
     proc = None
     if shell:
@@ -165,11 +165,11 @@ def block_until(
     When condition returns true, executes `effect`.
 
     Args:
-        condition (Callable[[], bool]): Condition to wait for.
-        effect (Callable[[], int]): Effect to trigger once condition is met.
-        timeout_s (int): Max time in seconds to wait for `condition`. By
+        condition: Condition to wait for.
+        effect: Effect to trigger once condition is met.
+        timeout_s: Max time in seconds to wait for `condition`. By
             default, is 6 minutes (360 seconds).
-        condition_fail_wait_s (int): On condition fail, time to wait before
+        condition_fail_wait_s: On condition fail, time to wait before
             attempting to check condition again. By default, is 10 seconds.
 
     Returns:
@@ -194,11 +194,11 @@ def syscall_to_condition(call: Callable[[], int]) -> Callable[[], bool]:
     """Convert syscall function (returns int) to boolean with exception catch.
 
     Args:
-        call (Callable[[], int]): System call funciton that should be wrapped
+        call: System call funciton that should be wrapped
             into a condition that is awaited until exit code.
 
     Returns:
-        Callable[[], bool]: Wrapped system call.
+        typing.Callable[[], bool]: Wrapped system call.
     """
 
     def _c() -> bool:

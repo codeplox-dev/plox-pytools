@@ -9,31 +9,31 @@ from typing import Optional, cast
 
 from pick import pick
 
-RESET = "\x1b[0m"
+_reset = "\x1b[0m"
 
 
 def blue(msg: str) -> str:
     """Wrap an input string so that is is printed with blue coloring escape codes."""
     blue = "\033[0;34m"
-    return f"{blue}{msg}{RESET}"
+    return f"{blue}{msg}{_reset}"
 
 
 def red(msg: str) -> str:
     """Wrap an input string so that is is printed with red coloring escape codes."""
     red = "\x1b[31;20m"
-    return f"{red}{msg}{RESET}"
+    return f"{red}{msg}{_reset}"
 
 
 def yellow(msg: str) -> str:
     """Wrap an input string so that is is printed with yellow coloring escape codes."""
     yellow = "\x1b[33;20m"
-    return f"{yellow}{msg}{RESET}"
+    return f"{yellow}{msg}{_reset}"
 
 
 def bold_red(msg: str) -> str:
     """Wrap an input string so that is is printed with bold red coloring escape codes."""
     bold_red = "\x1b[31;1m"
-    return f"{bold_red}{msg}{RESET}"
+    return f"{bold_red}{msg}{_reset}"
 
 
 def confirm(msg: str, yes_is_default: bool = False, silent: bool = False) -> bool:
@@ -42,15 +42,32 @@ def confirm(msg: str, yes_is_default: bool = False, silent: bool = False) -> boo
     If ``silent=True`` is passed, validation from user input is skipped an
     method automatically continues.
 
+    Example:
+
+        >>> confirm("Proceed?")
+        Proceed? (y/N) # entered "", default N
+        False
+
+        >>> confirm("Proceed?")
+        Proceed? (y/N) # entered "y"
+        True
+
+        >>> confirm("Proceed?", yes_is_default=True)
+        Proceed? (Y/n) # entered "", default Y
+        True
+
+        >>> confirm("Proceed?", silent=True)
+        True
+
     Args:
-        msg (str): The prompt to get Y/N input from the user on.
-        yes_is_default (bool): Optional, if provided, the default (empty
+        msg: The prompt to get Y/N input from the user on.
+        yes_is_default: Optional, if provided, the default (empty
             enter behaviour will be Y)
-        silent (bool): Whether or not to skip user input and just return
+        silent: Whether or not to skip user input and just return
             true immediately.
 
     Returns:
-        bool: True if user's response is yes, else False.
+        bool: ``True`` if user's response is yes, else ``False``.
     """
     if silent:
         return True
@@ -74,11 +91,17 @@ def single_choice_menu(
 ) -> str:
     """Prompt the user with a visual menu and return a single item they choose.
 
+    Example:
+
+        >>> single_choice_menu(["foo", "bar", "baz"], "Pick one")
+        #  < spawns interactive terminal menu, selected foo >
+        'foo'
+
     Args:
-        choices (list[str]): The list of options to choose from.
-        prompt (str): The prompt to display above the choices in the menu.
-        indicator (str): Indicator icon on left hand side of current selection.
-        trim_suffix (Optional[str]): Potential suffix to remove from the selected choice.
+        choices: The list of options to choose from.
+        prompt: The prompt to display above the choices in the menu.
+        indicator: Indicator icon on left hand side of current selection.
+        trim_suffix: Potential suffix to remove from the selected choice.
             Default is ``None``. Useful in cases where menuing choices are ordered/sorted
             and say for example, the top pick is appened with ``... (latest)`` but you're
             still only interested in the ``...``
@@ -96,9 +119,9 @@ def multi_choice_menu(choices: list[str], prompt: str, indicator: str = "=>") ->
     """Prompt the user with a menu and return a list of (potentially multiple) items they choose.
 
     Args:
-        choices (list[str]): The list of options to choose from.
-        prompt (str): The prompt to display above the choices in the menu.
-        indicator (str): Indicator icon on left hand side of current selection.
+        choices: The list of options to choose from.
+        prompt: The prompt to display above the choices in the menu.
+        indicator: Indicator icon on left hand side of current selection.
     """
     selected: list[str] = pick(  # pyright: ignore
         choices,

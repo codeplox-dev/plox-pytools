@@ -46,6 +46,11 @@ pytest = "*"
 pylint = "*"
 mypy = "*"
 detect-secrets = { git = "https://github.com/ibm/detect-secrets.git", tag = "0.13.1+ibm.62.dss" }
+python-docs-theme = "*"
+Sphinx = "*"
+myst-parser = "*"
+sphinx-autoapi = "*"
+sphinx-autodoc-typehints = "*"
 
 [build-system]
 requires = [ "poetry-core>=1.0.0",]

@@ -9,6 +9,8 @@ belongs in this module.
     from plox.tools import files
 """
 
+from __future__ import annotations
+
 from argparse import ArgumentTypeError
 from collections.abc import Generator
 from functools import reduce
@@ -25,14 +27,38 @@ from re import match as re_match
 from typing import Optional, Union
 
 FilePath = Union[PathLike[str], bytes, Path, str]
+"""Represent one of many formats for a local file on disk."""
 
 logger = getLogger(__name__)
 
 
-def format_bytes(num: Union[int, float], metric: bool = False, precision: int = 1) -> str:
+def format_bytes(number_bytes: Union[int, float], metric: bool = False, precision: int = 1) -> str:
     """Format bytes to human readable, using binary (1024) or metric (1000) representation.
 
     From: https://stackoverflow.com/a/63839503
+
+    Example:
+
+        >>> format_bytes(1024)
+        '1.0 KiB'
+        >>> format_bytes(1000)
+        '1000.0 B'
+        >>> format_bytes(1000, metric=True)
+        '1.0 kB'
+        >>> format_bytes(1024, metric=True, precision=3)
+        '1.024 kB'
+        >>> format_bytes(1_234_567_898_765_432, metric=True, precision=3)
+        '1.235 PB'
+
+    Args:
+        number_bytes: The number of bytes to convert to a human
+            readable labeled quantity.
+        metric: Whether or not the metric system is used; Default is ``False`` -
+            results in using binary.
+        precision: Number of digits/precision. Must be between 1-3.
+
+    Returns:
+        str: The human friendly sized representation of the bytes.
     """
     metric_labels = ("B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
     binary_labels = ("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
@@ -44,7 +70,7 @@ def format_bytes(num: Union[int, float], metric: bool = False, precision: int = 
         "{}{:.3f} {}",
     )
 
-    assert isinstance(num, (int, float)), "num must be an int or float"  # noqa: S101
+    assert isinstance(number_bytes, (int, float)), "number_bytes must be an int or float"  # noqa: S101
     assert isinstance(metric, bool), "metric must be a bool"  # noqa: S101
     assert (  # noqa: S101
         isinstance(precision, int) and precision >= 0 and precision <= 3
@@ -55,12 +81,12 @@ def format_bytes(num: Union[int, float], metric: bool = False, precision: int = 
     unit_step = 1000 if metric else 1024
     unit_step_thresh = unit_step - precision_offsets[precision]
 
-    is_negative = num < 0
+    is_negative = number_bytes < 0
     if is_negative:  # Faster than ternary assignment or always running abs().
-        num = abs(num)
+        number_bytes = abs(number_bytes)
 
     for unit in unit_labels:
-        if num < unit_step_thresh:
+        if number_bytes < unit_step_thresh:
             # VERY IMPORTANT:
             # Only accepts the CURRENT unit if we're BELOW the threshold where
             # float rounding behavior would place us into the NEXT unit: F.ex.
@@ -73,9 +99,9 @@ def format_bytes(num: Union[int, float], metric: bool = False, precision: int = 
             # NOTE: These looped divisions accumulate floating point rounding
             # errors, but each new division pushes the rounding errors further
             # and further down in the decimals, so it doesn't matter at all.
-            num /= unit_step
+            number_bytes /= unit_step
 
-    return precision_formats[precision].format("-" if is_negative else "", num, unit)  # pyright: ignore
+    return precision_formats[precision].format("-" if is_negative else "", number_bytes, unit)  # pyright: ignore
 
 
 def file_contents(path: FilePath) -> str:
@@ -98,7 +124,7 @@ def bin_file_contents(path: FilePath) -> bytearray:
         path (FilePath): Path on local disk to file.
 
     Returns:
-        bytes: Contents of binary file.
+        bytearray: Contents of binary file.
     """
     bb = bytearray()
 
@@ -113,7 +139,7 @@ def file_contents_from_envar(key: str) -> str:
     """Fetch and envars's local file path's contents as a string.
 
     Args:
-        key (str): Name of environment variable whose value represents the file
+        key: Name of environment variable whose value represents the file
             path to read.
 
     Returns:
@@ -136,9 +162,9 @@ def file_lines(
     Args:
         filename (FilePath): The path on disk of the file whose lines of content
             will be parsed and returned.
-        skip_filtration (bool): Whether the results should ignore any filtration.
+        skip_filtration: Whether the results should ignore any filtration.
             Default **true**.
-        patterns (Optional[list[Pattern[str]]]): A list of regex patterns which
+        patterns: A list of regex patterns which
             if skip_filtration is false will be ignored if matching a given
             line.
 
@@ -165,7 +191,7 @@ def delete_folder_and_contents(pth: Path) -> None:
     """Recursively deletes a given folder path.
 
     Args:
-        pth (Path): The path to local disk to entirely remove.
+        pth: The path to local disk to entirely remove.
     """
     if pth.resolve() in [Path("/"), Path("~").expanduser()]:
         logger.warning("Hm, this looks pretty dangerous.")
@@ -185,10 +211,10 @@ def walkdir(
     """Walk a local directory, and yield a set of found files.
 
     Args:
-        dirpattern (str): The pattern to walk through. Example, ``**`` or
+        dirpattern: The pattern to walk through. Example, ``**`` or
             ``/some/path/**``.
-        recursive (bool): Whether or not to recursively list sub-items.
-        ignore_pattern (Optional[list[str]]): A list of wildcard like patterns
+        recursive: Whether or not to recursively list sub-items.
+        ignore_pattern: A list of wildcard like patterns
             that, if provided, any file matching will _not_ be returned.
     """
     for filename in iglob(dirpattern, recursive=recursive):
@@ -211,7 +237,7 @@ def ensure_dir(path: str) -> None:
     If the path does not exist as a directory, it is made.
 
     Args:
-        path (str): The path at to check is a valid directory path.
+        path: The path at to check is a valid directory path.
     """
     dirpath, _ = path_split(path)
     if len(dirpath) != 0 and not isdir(dirpath):
@@ -222,8 +248,8 @@ def list_files(directory_path: str, sort: bool = False) -> list[str]:
     """Return a list of files (str) in a directory.
 
     Args:
-        directory_path (str): The path to the local directory on disk.
-        sort (bool): Whether or not the results should be alphabetically sorted. Default
+        directory_path: The path to the local directory on disk.
+        sort: Whether or not the results should be alphabetically sorted. Default
             ``False``.
     """
     files = [f for f in listdir(directory_path) if isfile(path_join(directory_path, f))]
@@ -239,10 +265,10 @@ def existing_filepath(file_path: str) -> str:
     this helper utility is a type for an argparse argument.
 
     Args:
-        file_path (str): The path to the file to check exists.
+        file_path: The path to the file to check exists.
 
     Raises:
-        ArgumentTypeError: If the given ``file_path`` does not exist.
+        argparse.ArgumentTypeError: If the given ``file_path`` does not exist.
 
     Returns:
         str: Passed in ``file_path``
