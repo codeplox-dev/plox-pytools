@@ -8,9 +8,7 @@ This page contains auto-generated API reference documentation.
 
    {% for page in pages | sort %}
    {#
-      Add the top most levels in "astronomer.providers.X" to the index file
-      This is needed because we don't have __init__.py file in astronomer
-      and astronomer/providers package as we use nested implicit namespace packages.
+      bc we use namespace package without a toplevel __init__.py
    #}
    {% if (page.top_level_object or page.name.split('.') | length == 2) and page.display %}
    plox.{{ page.short_name }} <{{ page.include_path }}>
