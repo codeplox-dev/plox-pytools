@@ -45,8 +45,8 @@ jobs:
         with:
           category: "/language:python"
           output: ./codeql/
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: ${{ steps.analyze.outputs.sarif-output }}/python.sarif
-          category: "/language:python"
+      #- name: Upload SARIF file
+      #  uses: github/codeql-action/upload-sarif@v3
+      #  with:
+      #    sarif_file: ${{ steps.analyze.outputs.sarif-output }}/python.sarif
+      #    category: "/language:python"
