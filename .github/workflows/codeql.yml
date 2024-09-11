@@ -49,4 +49,4 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ steps.analyze.outputs.sarif-output }}/python.sarif
-          category: codeql
+          category: "/language:python"
