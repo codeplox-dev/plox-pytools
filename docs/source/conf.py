@@ -82,6 +82,9 @@ html_sidebars = {
    "**": ["globaltoc.html", "sourcelink.html", "searchbox.html"],
    "using/windows": ["windows-sidebar.html", "searchbox.html"],
 }
+#html_theme_options = {
+#    "collapsiblesidebar": True,
+#}
 
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]

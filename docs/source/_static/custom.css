@@ -1,1 +1,5 @@
-div.sphinxsidebarwrapper { width: 300px; }
+div.sphinxsidebarwrapper { width: 290px; }
+div.sphinxsidebar { width: 290px; }
+div.bodywrapper {
+  margin: 0 0 0 290px;
+}
