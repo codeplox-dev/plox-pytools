@@ -1,0 +1,5 @@
+python-docs-theme
+Sphinx
+myst-parser
+sphinx-autoapi
+sphinx-autodoc-typehints

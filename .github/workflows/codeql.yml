@@ -1,0 +1,52 @@
+name: codeql
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'plox/**'
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      # required for all workflows
+      security-events: write
+      # required to fetch internal or private CodeQL packs
+      packages: read
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - uses: github/codeql-action/init@v3
+        with:
+          queries: security-extended
+          languages: python
+          build-mode: none
+          config: |
+            paths:
+              - plox
+      - uses: github/codeql-action/analyze@v3
+        id: analyze
+        with:
+          category: "/language:python"
+          output: ./codeql/
+      #- name: Upload SARIF file
+      #  uses: github/codeql-action/upload-sarif@v3
+      #  with:
+      #    sarif_file: ${{ steps.analyze.outputs.sarif-output }}/python.sarif
+      #    category: "/language:python"

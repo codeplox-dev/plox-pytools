@@ -16,10 +16,13 @@ repos:
     - id: detect-secrets # pragma: whitelist secret
       args: [--baseline, .secrets.baseline, --use-all-plugins]
 
--   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.2
-    hooks:
-    -   id: mypy
-        exclude: "test/.*|plox-common/.*"
-        args: ["--config-file", "mypy.ini"]
-        additional_dependencies: []
+# For now, remove mypy from pre-commit bc the way it handles dependencies is kinda
+# lame and haven't had time to mess aroudn with finding a good/acceptable usage
+# yet
+# -   repo: https://github.com/pre-commit/mirrors-mypy
+#     rev: v1.11.2
+#     hooks:
+#     -   id: mypy
+#         exclude: "test/.*|plox-common/.*"
+#         args: ["--config-file", "mypy.ini"]
+#         additional_dependencies: ["pick"]

@@ -72,7 +72,7 @@ git add .secrets.baseline
 ## 5. Ensure code conformity
 
 ```bash
-pre-commit run --all-files
+make check
 ```
 
 Iterate and fix any issues that may arise.

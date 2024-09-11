@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "plox-tools"
-version = "0.0.0"
+version = "0.0.0+8402dfa"
 description = "A simple package that houses simple utilities for dealing with common tasks."
 authors = [
     "bigpick",
 ]
-maintainers = ["bigpick", "Mike <mike@codeplox.dev"]
+maintainers = ["bigpick <bigpick@codeplox.dev>", "Mike <mike@codeplox.dev"]
 exclude = [ "**/test/*",]
 readme = "README.md"
 classifiers = [
@@ -32,15 +32,12 @@ classifiers = [
 ]
 
 [[tool.poetry.packages]]
-include = "plox_tools"
-from = "src"
-
-[[tool.poetry.include]]
-path = "src"
-format = "sdist"
+include = "*"
+from = "plox"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <4"
+pick = "*"
 
 [tool.poetry.dev-dependencies]
 pyright = "*"
@@ -49,6 +46,11 @@ pytest = "*"
 pylint = "*"
 mypy = "*"
 detect-secrets = { git = "https://github.com/ibm/detect-secrets.git", tag = "0.13.1+ibm.62.dss" }
+python-docs-theme = "*"
+Sphinx = "*"
+myst-parser = "*"
+sphinx-autoapi = "*"
+sphinx-autodoc-typehints = "*"
 
 [build-system]
 requires = [ "poetry-core>=1.0.0",]
