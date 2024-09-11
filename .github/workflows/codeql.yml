@@ -21,6 +21,11 @@ jobs:
       actions: read
       contents: read
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
       - uses: github/codeql-action/init@v3
         with:
           build-mode: none
