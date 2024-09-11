@@ -26,6 +26,9 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
       - uses: github/codeql-action/init@v3
         with:
           build-mode: none
@@ -34,14 +37,14 @@ jobs:
           config: |
             paths:
               - src
-            paths-ignore:
-              - src/node_modules
-              - '**/*.test.js'
       - uses: github/codeql-action/analyze@v3
         id: analyze
         with:
           category: "/language:python"
           output: ./codeql/
+          config: |
+            paths:
+              - src
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
