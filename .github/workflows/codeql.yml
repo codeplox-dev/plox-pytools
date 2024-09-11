@@ -31,21 +31,17 @@ jobs:
           python-version: 3.12
       - uses: github/codeql-action/init@v3
         with:
-          build-mode: none
           queries: security-extended
           languages: python
+          build-mode: none
           config: |
             paths:
-              - src
+              - plox
       - uses: github/codeql-action/analyze@v3
         id: analyze
         with:
-          build-mode: none
           category: "/language:python"
           output: ./codeql/
-          config: |
-            paths:
-              - src
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
