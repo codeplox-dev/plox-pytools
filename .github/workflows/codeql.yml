@@ -40,6 +40,7 @@ jobs:
       - uses: github/codeql-action/analyze@v3
         id: analyze
         with:
+          build-mode: none
           category: "/language:python"
           output: ./codeql/
           config: |
