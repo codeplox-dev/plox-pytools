@@ -1,4 +1,4 @@
-name: Label check
+name: codeql
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-  codeql:
+  scan:
     runs-on: ubuntu-latest
     permissions:
       # required for all workflows
