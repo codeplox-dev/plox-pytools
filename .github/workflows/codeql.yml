@@ -1,0 +1,44 @@
+name: Label check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'plox/**'
+
+
+jobs:
+  codeql:
+    runs-on: ubuntu-latest
+    permissions:
+      # required for all workflows
+      security-events: write
+      # required to fetch internal or private CodeQL packs
+      packages: read
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+    steps:
+      - uses: github/codeql-action/init@v3
+        with:
+          build-mode: none
+          queries: security-extended
+          languages: python
+          config: |
+            paths:
+              - src
+            paths-ignore:
+              - src/node_modules
+              - '**/*.test.js'
+      - uses: github/codeql-action/analyze@v3
+        id: analyze
+        with:
+          category: "/language:python"
+          output: ./codeql/
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.analyze.outputs.sarif-output }}/file.sarif
+          category: codeql

@@ -2,7 +2,7 @@
 
 ## Install
 
-TODO
+* [pypi](https://pypi.org/project/plox-tools/)
 
 ```bash
 pip install plox-tools
@@ -10,7 +10,8 @@ pip install plox-tools
 
 ## Documenation
 
-See: TODO
+* [plox-tools documentation](#todo)
+
 
 ## Developing
 
