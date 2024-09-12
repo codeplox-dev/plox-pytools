@@ -4,6 +4,10 @@
 
 * feat: initial release
 
+## v0.0.0-rc5
+
+* docs: Add GitHub Pages link and badge
+
 ## v0.0.0-rc4
 
 * feat: GitHub Pages publishing via CI
