@@ -1,0 +1,211 @@
+plox.tools.utilities
+====================
+
+.. py:module:: plox.tools.utilities
+
+.. autoapi-nested-parse::
+
+   Miscellaneous tools/utils that don't have a specific theme but are still valuable.
+
+   .. code-block:: python
+
+       from plox.tools import utilities
+
+   These functions are not tied to a particular area (e.g. file system utils) but have
+   use cases/functionality that comes up often enough to warrant existing as a tested,
+   well formed module.
+
+   It is usually the case that new utilities are added to this location, and potentially,
+   after some time of forming mass, there is enough continuity of a set of function to
+   warrant splitting into their own module (e.g :py:mod:`plox.tools.files`).
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   plox.tools.utilities.composite_function
+   plox.tools.utilities.is_listlike
+   plox.tools.utilities.is_same_list
+   plox.tools.utilities.partition
+   plox.tools.utilities.to_tuples
+   plox.tools.utilities.unnest
+   plox.tools.utilities.window_iterator
+
+
+Module Contents
+---------------
+
+.. py:function:: composite_function(*functions)
+
+   Compose multiple functions to a single callable.
+
+   .. admonition:: Example
+
+      >>> def square(x: int) -> int:
+      ...     return x**2
+      >>>
+      >>> def half(x: int) -> int:
+      >>>     return x // 2
+      >>>
+      >>> composite_function(square, half)(3)
+      4
+      >>> composite_function(square, half)(2)
+      2
+
+   :param functions: A variable number of
+                     callable functions to compose.
+
+   :returns: The resulting composite
+             function.
+   :rtype: typing.Callable[[typing.Any], typing.Optional[typing.Any]]
+
+
+.. py:function:: is_listlike(thing)
+
+   Check if a given thing is seemingly a list.
+
+   Python has iterable strings, and when iterating over something that is sometimes
+   a list or sometimes a string, usually don't want to iterate over the chars in the
+   string, but want to iterate over the items in the list (see
+   :func:`~plox.tools.utilities.unnest`)
+
+   .. admonition:: Example
+
+      >>> is_listlike("a")
+      False
+      >>> is_listlike("[]")
+      False
+      >>> is_listlike([])
+      True
+      >>> is_listlike([1, 2, 3])
+      True
+
+   :param thing: Item to check if behaves like a list.
+
+   :returns: ``True`` if item behaves like list, else ``False``.
+   :rtype: bool
+
+
+.. py:function:: is_same_list(l1, l2)
+
+   Check if two lists are identical.
+
+   :param l1: First list to compare.
+   :param l2: Second list to compare.
+
+   :returns: True if identical, false otherwise.
+   :rtype: bool
+
+
+.. py:function:: partition(d, key_fn)
+
+   Split a dictionary into two separate ones based on a filtering function.
+
+   .. admonition:: Example
+
+      >>> d = {"a": 10, "B": 20, "c": 30, "D": 50}
+      >>> one, two = partition(d, lambda key: key.islower())
+      >>> one
+      {"a": 10, "c": 30}
+      >>> two
+      {"B": 20, "D": 50}
+
+   :param d: The original dictionary to split.
+   :param key_fn: The function to operate against each
+                  dictionary key in the original dictionary. If successful for a
+                  given key, adds key:value to the first dictionary returned.
+                  Otherwise, adds the key:value to the second dictionary returned.
+
+   :returns: The two sets of
+             dictionaries resulting from applying the filtering function to every key in the
+             original dictionary.
+   :rtype: tuple[dict[typing.Any, typing.Any], dict[typing.Any, typing.Any]]
+
+
+.. py:function:: to_tuples(d)
+
+   Convert a dictionary of key:value pairs to a list of tuples.
+
+   The list of tuples will be of key:value pairing.
+
+   .. admonition:: Example
+
+      >>> to_tuples({"a": "b", "c": "d"})
+      [("a", "b"), ("c", "d")]
+
+   :param d: The dictionary whose values will be split to
+             a list of tuples.
+
+   :returns: A list of tuples representing the input
+             dict's key:value pairs.
+   :rtype: list[tuple[str, TupleVal]]
+
+
+.. py:function:: unnest(*p)
+
+   Unnest arbitrarily nested items in a list to flat level list.
+
+   Note: This is done particularly because otherwise if a string occurs in
+   the list, it gets exploded to individual characters, which is not desired.
+
+   .. admonition:: Examples
+
+      >>> unnest()
+      []
+      >>> unnest([])
+      []
+      >>> unnest("a", "b", ["c"])
+      ["a", "b", "c"]
+      >>> unnest("a")
+      ["a"]
+      >>> unnest(["a"])
+      ["a"]
+      >>> unnest([[[["a"]]]])
+      ["a"]
+      >>> unnest("a", {"b": "c"}, ["d", "e"], "f")
+      ["a", {"b": "c"}, "d", "e", "f"]
+
+   :param p: Arbitrarily nested list to flatten.
+
+   :returns: The input list with 1 level nesting.
+   :rtype: list[typing.Any]
+
+
+.. py:function:: window_iterator(seq, n = 2)
+
+   Return a sliding window (of width n) over data from the iterable.
+
+   s -> (s0,s1,...s[n-1]), (s1,s2,...,sn), ...
+
+   .. admonition:: Example
+
+      >>> for window in window_iterator(range(10)):
+      ...     print(window)
+      (0, 1)
+      (1, 2)
+      (2, 3)
+      (3, 4)
+      (4, 5)
+      (5, 6)
+      (6, 7)
+      (7, 8)
+      (8, 9)
+      
+      >>> for window in window_iterator(range(6), 3):
+      ...     print(",".join(map(str, window)))
+      0,1,2
+      1,2,3
+      2,3,4
+      3,4,5
+
+   :param seq: The iterator to generate windows from.
+   :param n: The width of window to generate; default is 2.
+
+   :returns: A generator of windows of desired size,
+             containing a tuple of two objects of the same type of the original iterator.
+   :rtype: typing.Generator[tuple[_T, ...], None, None]
+
+

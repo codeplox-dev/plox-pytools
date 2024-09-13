@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>plox.tools.files &#8212; plox-tools  documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pydoctheme.css?v=41b4f12d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../../../../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=ab55c6b8" />
+    
+    <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="plox.tools.interaction" href="../interaction/index.html" />
+    <link rel="prev" title="plox.tools.environment" href="../environment/index.html" /><link rel="stylesheet" href="../../../../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../../../../_static/py.svg" />
+            <script type="text/javascript" src="../../../../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../../../../_static/menu.js"></script>
+            <script type="text/javascript" src="../../../../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../../../../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../../../../_static/py.svg" alt="Python logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../../../../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../../../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">plox.tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../environment/index.html">plox.tools.environment</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">plox.tools.files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../interaction/index.html">plox.tools.interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/index.html">plox.tools.system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utilities/index.html">plox.tools.utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/api/plox/tools/files/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../interaction/index.html" title="plox.tools.interaction"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../environment/index.html" title="plox.tools.environment"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../../../../_static/py.svg" alt="Python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../../../../index.html">plox-tools  documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >API Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" accesskey="U">plox.tools</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">plox.tools.files</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../../../../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-plox.tools.files">
+<span id="plox-tools-files"></span><h1>plox.tools.files<a class="headerlink" href="#module-plox.tools.files" title="Link to this heading">¶</a></h1>
+<p>Assorted utilities for dealing with anything related to local file system.</p>
+<p>If it is a generic method for dealing with something locally on disk, about a file,
+or about something related to a file, it is a good bet that it is a function that
+belongs in this module.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">plox.tools</span> <span class="kn">import</span> <span class="n">files</span>
+</pre></div>
+</div>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plox.tools.files.FilePath" title="plox.tools.files.FilePath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilePath</span></code></a></p></td>
+<td><p>Represent one of many formats for a local file on disk.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plox.tools.files.bin_file_contents" title="plox.tools.files.bin_file_contents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_file_contents</span></code></a>(path)</p></td>
+<td><p>Read and return a local binary file path's contents as a byte array.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plox.tools.files.delete_folder_and_contents" title="plox.tools.files.delete_folder_and_contents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_folder_and_contents</span></code></a>(pth)</p></td>
+<td><p>Recursively deletes a given folder path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plox.tools.files.ensure_dir" title="plox.tools.files.ensure_dir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_dir</span></code></a>(path)</p></td>
+<td><p>Ensure the local directory structure exists for a given path.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plox.tools.files.existing_filepath" title="plox.tools.files.existing_filepath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">existing_filepath</span></code></a>(file_path)</p></td>
+<td><p>Check whether a given path is an existent file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plox.tools.files.file_contents" title="plox.tools.files.file_contents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">file_contents</span></code></a>(path)</p></td>
+<td><p>Read and return a local file path's contents as a string.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plox.tools.files.file_contents_from_envar" title="plox.tools.files.file_contents_from_envar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">file_contents_from_envar</span></code></a>(key)</p></td>
+<td><p>Fetch and envars's local file path's contents as a string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plox.tools.files.file_lines" title="plox.tools.files.file_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">file_lines</span></code></a>(filename[, skip_filtration, patterns])</p></td>
+<td><p>Return the contents of a given filepath as its individual lines.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plox.tools.files.format_bytes" title="plox.tools.files.format_bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_bytes</span></code></a>(number_bytes[, metric, precision])</p></td>
+<td><p>Format bytes to human readable, using binary (1024) or metric (1000) representation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plox.tools.files.list_files" title="plox.tools.files.list_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_files</span></code></a>(directory_path[, sort])</p></td>
+<td><p>Return a list of files (str) in a directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plox.tools.files.walkdir" title="plox.tools.files.walkdir"><code class="xref py py-obj docutils literal notranslate"><span class="pre">walkdir</span></code></a>(dirpattern[, recursive, ignore_pattern])</p></td>
+<td><p>Walk a local directory, and yield a set of found files.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="plox.tools.files.FilePath">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">FilePath</span></span><a class="headerlink" href="#plox.tools.files.FilePath" title="Link to this definition">¶</a></dt>
+<dd><p>Represent one of many formats for a local file on disk.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.bin_file_contents">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">bin_file_contents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.bin_file_contents" title="Link to this definition">¶</a></dt>
+<dd><p>Read and return a local binary file path’s contents as a byte array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference internal" href="#plox.tools.files.FilePath" title="plox.tools.files.FilePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code></a>) – Path on local disk to file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Contents of binary file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#bytearray" title="(in Python v3.12)">bytearray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.delete_folder_and_contents">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">delete_folder_and_contents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.delete_folder_and_contents" title="Link to this definition">¶</a></dt>
+<dd><p>Recursively deletes a given folder path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pth</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><em>pathlib.Path</em></a>) – The path to local disk to entirely remove.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.ensure_dir">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">ensure_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.ensure_dir" title="Link to this definition">¶</a></dt>
+<dd><p>Ensure the local directory structure exists for a given path.</p>
+<p>If the path does not exist as a directory, it is made.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The path at to check is a valid directory path.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.existing_filepath">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">existing_filepath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.existing_filepath" title="Link to this definition">¶</a></dt>
+<dd><p>Check whether a given path is an existent file.</p>
+<p>If not, raises and ArgumentTypeError, as the intended purpose of
+this helper utility is a type for an argparse argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The path to the file to check exists.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/argparse.html#argparse.ArgumentTypeError" title="(in Python v3.12)"><strong>argparse.ArgumentTypeError</strong></a> – If the given <code class="docutils literal notranslate"><span class="pre">file_path</span></code> does not exist.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Passed in <code class="docutils literal notranslate"><span class="pre">file_path</span></code></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.file_contents">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">file_contents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.file_contents" title="Link to this definition">¶</a></dt>
+<dd><p>Read and return a local file path’s contents as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference internal" href="#plox.tools.files.FilePath" title="plox.tools.files.FilePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code></a>) – Path on local disk to file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Contents of file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.file_contents_from_envar">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">file_contents_from_envar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.file_contents_from_envar" title="Link to this definition">¶</a></dt>
+<dd><p>Fetch and envars’s local file path’s contents as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of environment variable whose value represents the file
+path to read.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Contents of the value of the environment’s key at local disk path.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.file_lines">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">file_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_filtration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.file_lines" title="Link to this definition">¶</a></dt>
+<dd><p>Return the contents of a given filepath as its individual lines.</p>
+<p>By default, will not include any filtration of the file’s contents. If desired,
+can set <code class="docutils literal notranslate"><span class="pre">skip_filtration</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> and specify the list of patterns to exclude
+(on a per-line <code class="docutils literal notranslate"><span class="pre">re.match</span></code> basis) via the <code class="docutils literal notranslate"><span class="pre">patterns</span></code> argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference internal" href="#plox.tools.files.FilePath" title="plox.tools.files.FilePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code></a>) – The path on disk of the file whose lines of content
+will be parsed and returned.</p></li>
+<li><p><strong>skip_filtration</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the results should ignore any filtration.
+Default <strong>true</strong>.</p></li>
+<li><p><strong>patterns</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3.12/library/re.html#re.Pattern" title="(in Python v3.12)"><em>re.Pattern</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em><em>]</em><em>]</em>) – A list of regex patterns which
+if skip_filtration is false will be ignored if matching a given
+line.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The set of lines that the file consists of after potentially
+filtering.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.format_bytes">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">format_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.format_bytes" title="Link to this definition">¶</a></dt>
+<dd><p>Format bytes to human readable, using binary (1024) or metric (1000) representation.</p>
+<p>Inspired by: <a class="reference external" href="https://stackoverflow.com/a/63839503">https://stackoverflow.com/a/63839503</a></p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">format_bytes</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="go">&#39;1.0 KiB&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_bytes</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="go">&#39;1000.0 B&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_bytes</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">&#39;1.0 kB&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_bytes</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">&#39;1.024 kB&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_bytes</span><span class="p">(</span><span class="mi">1_234_567_898_765_432</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">&#39;1.235 PB&#39;</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number_bytes</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3.12/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3.12/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>]</em>) – The number of bytes to convert to a human
+readable labeled quantity.</p></li>
+<li><p><strong>metric</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether or not the metric system is used; Default is <code class="docutils literal notranslate"><span class="pre">False</span></code> -
+results in using binary.</p></li>
+<li><p><strong>precision</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of digits/precision. Must be between 1-3.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The human friendly sized representation of the bytes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.list_files">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">list_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.list_files" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of files (str) in a directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory_path</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The path to the local directory on disk.</p></li>
+<li><p><strong>sort</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether or not the results should be alphabetically sorted. Default
+<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plox.tools.files.walkdir">
+<span class="sig-prename descclassname"><span class="pre">plox.tools.files.</span></span><span class="sig-name descname"><span class="pre">walkdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpattern</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recursive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plox.tools.files.walkdir" title="Link to this definition">¶</a></dt>
+<dd><p>Walk a local directory, and yield a set of found files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dirpattern</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The pattern to walk through. Example, <code class="docutils literal notranslate"><span class="pre">**</span></code> or
+<code class="docutils literal notranslate"><span class="pre">/some/path/**</span></code>.</p></li>
+<li><p><strong>recursive</strong> (<a class="reference external" href="https://docs.python.org/3.12/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether or not to recursively list sub-items.</p></li>
+<li><p><strong>ignore_pattern</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em><em>]</em>) – A list of wildcard like patterns
+that, if provided, any file matching will _not_ be returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.12/library/collections.abc.html#collections.abc.Generator" title="(in Python v3.12)">collections.abc.Generator</a>[<a class="reference external" href="https://docs.python.org/3.12/library/stdtypes.html#str" title="(in Python v3.12)">str</a>, None, None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../../../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">plox.tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../environment/index.html">plox.tools.environment</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">plox.tools.files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../interaction/index.html">plox.tools.interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/index.html">plox.tools.system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utilities/index.html">plox.tools.utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../../_sources/api/plox/tools/files/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../interaction/index.html" title="plox.tools.interaction"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../environment/index.html" title="plox.tools.environment"
+             >previous</a> |</li>
+          <li><img src="../../../../_static/py.svg" alt="Python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../../../../index.html">plox-tools  documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >API Reference</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >plox.tools</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">plox.tools.files</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../../../../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; 
+    Copyright
+     2024, codeplox-dev.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
+    </div>
+
+  </body>
+</html>

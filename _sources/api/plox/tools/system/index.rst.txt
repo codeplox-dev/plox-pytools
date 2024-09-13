@@ -1,0 +1,92 @@
+plox.tools.system
+=================
+
+.. py:module:: plox.tools.system
+
+.. autoapi-nested-parse::
+
+   Utilities for interaction with local system binaries, executables, etc.
+
+   .. code-block:: python
+
+       from plox.tools import system
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   plox.tools.system.block_until
+   plox.tools.system.sync_command
+   plox.tools.system.sys_exec
+   plox.tools.system.syscall_to_condition
+
+
+Module Contents
+---------------
+
+.. py:function:: block_until(condition, effect, timeout_s = 360, condition_fail_wait_s = 10)
+
+   Block execution (up to timeout_s) until (condition) returns True.
+
+   When condition returns true, executes `effect`.
+
+   :param condition: Condition to wait for.
+   :param effect: Effect to trigger once condition is met.
+   :param timeout_s: Max time in seconds to wait for `condition`. By
+                     default, is 6 minutes (360 seconds).
+   :param condition_fail_wait_s: On condition fail, time to wait before
+                                 attempting to check condition again. By default, is 10 seconds.
+
+   :returns: `effect`'s return code.
+   :rtype: int
+
+
+.. py:function:: sync_command(cmd, shell = False, exit_on_error = False)
+
+   Executed a system command.
+
+   :param cmd: Command to execute on host.
+   :param shell: Whether or not to execute the command as passed, or
+                 if should be tokenized and passed as list of values to subprocess.
+                 By default, passed command is split for safety.
+   :param exit_on_error: Whether or not hard exit should occur if process
+                         does not return successfully. By default, false.
+
+   :returns: The completed process.
+   :rtype: subprocess.CompletedProcess[bytes]
+
+
+.. py:function:: sys_exec(cwd, executable, exec_args, environment, stdout_file_dest = None, quiet_stderr = False, exec_timeout_mins = 24)
+
+   Execute a system command, threaded logging safe.
+
+   :param cwd: Current directory that command is being invoked from.
+   :param executable: Path to local binary that should be excecuted.
+   :param exec_args: List of args to pass to the executable.
+   :param environment: Dictionary of k:v pairings to pass to
+                       the executable process' environment.
+   :param stdout_file_dest: Optional file to log output text to.
+                            By default, does not log to file.
+   :param quiet_stderr: Whether or not stderr output should be silenced.
+                        By default, stderr is **not** silenced.
+   :param exec_timeout_mins: Time in minutes before command is timed out.
+                             By default, is 24 minutes.
+
+   :returns: Return code of executed process.
+   :rtype: int
+
+
+.. py:function:: syscall_to_condition(call)
+
+   Convert syscall function (returns int) to boolean with exception catch.
+
+   :param call: System call funciton that should be wrapped
+                into a condition that is awaited until exit code.
+
+   :returns: Wrapped system call.
+   :rtype: typing.Callable[[], bool]
+
+

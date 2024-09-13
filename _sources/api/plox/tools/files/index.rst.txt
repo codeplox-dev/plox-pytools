@@ -1,0 +1,186 @@
+plox.tools.files
+================
+
+.. py:module:: plox.tools.files
+
+.. autoapi-nested-parse::
+
+   Assorted utilities for dealing with anything related to local file system.
+
+   If it is a generic method for dealing with something locally on disk, about a file,
+   or about something related to a file, it is a good bet that it is a function that
+   belongs in this module.
+
+   .. code-block:: python
+
+       from plox.tools import files
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   plox.tools.files.FilePath
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   plox.tools.files.bin_file_contents
+   plox.tools.files.delete_folder_and_contents
+   plox.tools.files.ensure_dir
+   plox.tools.files.existing_filepath
+   plox.tools.files.file_contents
+   plox.tools.files.file_contents_from_envar
+   plox.tools.files.file_lines
+   plox.tools.files.format_bytes
+   plox.tools.files.list_files
+   plox.tools.files.walkdir
+
+
+Module Contents
+---------------
+
+.. py:data:: FilePath
+
+   Represent one of many formats for a local file on disk.
+
+.. py:function:: bin_file_contents(path)
+
+   Read and return a local binary file path's contents as a byte array.
+
+   :param path: Path on local disk to file.
+   :type path: :py:class:`FilePath`
+
+   :returns: Contents of binary file.
+   :rtype: bytearray
+
+
+.. py:function:: delete_folder_and_contents(pth)
+
+   Recursively deletes a given folder path.
+
+   :param pth: The path to local disk to entirely remove.
+
+
+.. py:function:: ensure_dir(path)
+
+   Ensure the local directory structure exists for a given path.
+
+   If the path does not exist as a directory, it is made.
+
+   :param path: The path at to check is a valid directory path.
+
+
+.. py:function:: existing_filepath(file_path)
+
+   Check whether a given path is an existent file.
+
+   If not, raises and ArgumentTypeError, as the intended purpose of
+   this helper utility is a type for an argparse argument.
+
+   :param file_path: The path to the file to check exists.
+
+   :raises argparse.ArgumentTypeError: If the given ``file_path`` does not exist.
+
+   :returns: Passed in ``file_path``
+   :rtype: str
+
+
+.. py:function:: file_contents(path)
+
+   Read and return a local file path's contents as a string.
+
+   :param path: Path on local disk to file.
+   :type path: :py:class:`FilePath`
+
+   :returns: Contents of file
+   :rtype: str
+
+
+.. py:function:: file_contents_from_envar(key)
+
+   Fetch and envars's local file path's contents as a string.
+
+   :param key: Name of environment variable whose value represents the file
+               path to read.
+
+   :returns: Contents of the value of the environment's key at local disk path.
+   :rtype: str
+
+
+.. py:function:: file_lines(filename, skip_filtration = True, patterns = None)
+
+   Return the contents of a given filepath as its individual lines.
+
+   By default, will not include any filtration of the file's contents. If desired,
+   can set ``skip_filtration`` to ``True`` and specify the list of patterns to exclude
+   (on a per-line ``re.match`` basis) via the ``patterns`` argument.
+
+   :param filename: The path on disk of the file whose lines of content
+                    will be parsed and returned.
+   :type filename: :py:class:`FilePath`
+   :param skip_filtration: Whether the results should ignore any filtration.
+                           Default **true**.
+   :param patterns: A list of regex patterns which
+                    if skip_filtration is false will be ignored if matching a given
+                    line.
+
+   :returns: The set of lines that the file consists of after potentially
+             filtering.
+   :rtype: list[str]
+
+
+.. py:function:: format_bytes(number_bytes, metric = False, precision = 1)
+
+   Format bytes to human readable, using binary (1024) or metric (1000) representation.
+
+   Inspired by: https://stackoverflow.com/a/63839503
+
+   .. admonition:: Example
+
+      >>> format_bytes(1024)
+      '1.0 KiB'
+      >>> format_bytes(1000)
+      '1000.0 B'
+      >>> format_bytes(1000, metric=True)
+      '1.0 kB'
+      >>> format_bytes(1024, metric=True, precision=3)
+      '1.024 kB'
+      >>> format_bytes(1_234_567_898_765_432, metric=True, precision=3)
+      '1.235 PB'
+
+   :param number_bytes: The number of bytes to convert to a human
+                        readable labeled quantity.
+   :param metric: Whether or not the metric system is used; Default is ``False`` -
+                  results in using binary.
+   :param precision: Number of digits/precision. Must be between 1-3.
+
+   :returns: The human friendly sized representation of the bytes.
+   :rtype: str
+
+
+.. py:function:: list_files(directory_path, sort = False)
+
+   Return a list of files (str) in a directory.
+
+   :param directory_path: The path to the local directory on disk.
+   :param sort: Whether or not the results should be alphabetically sorted. Default
+                ``False``.
+
+
+.. py:function:: walkdir(dirpattern, recursive = True, ignore_pattern = None)
+
+   Walk a local directory, and yield a set of found files.
+
+   :param dirpattern: The pattern to walk through. Example, ``**`` or
+                      ``/some/path/**``.
+   :param recursive: Whether or not to recursively list sub-items.
+   :param ignore_pattern: A list of wildcard like patterns
+                          that, if provided, any file matching will _not_ be returned.
+
+
