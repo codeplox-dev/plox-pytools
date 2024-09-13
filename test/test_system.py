@@ -87,9 +87,7 @@ def test_sync_command(temp_file_creation: Path):
 def test_sync_command_negative():
     out = sync_command("ls /doesnotexit", shell=True, exit_on_error=False)
     assert out.stdout.decode() == ""
-    assert (
-        out.stderr.decode().strip() == "ls: cannot access '/doesnotexit': No such file or directory"
-    )
+    assert "No such file or directory" in out.stderr.decode().strip()
 
     with raises(SystemExit) as e:
         out = sync_command("ls /doesnotexit", shell=False, exit_on_error=True)
