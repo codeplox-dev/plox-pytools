@@ -66,7 +66,7 @@ def parse_environment_file_to_values(envfile: FilePath, expand_vars: bool = True
 
         return m.group("key"), val
 
-    prepped = dict(map(process_line, file_lines(envfile)))
+    prepped = dict(map(process_line, file_lines(envfile, skip_filtration=False)))
     return prepped
 
 

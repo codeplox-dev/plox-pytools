@@ -1,10 +1,8 @@
 [tool.poetry]
 name = "plox-tools"
-version = "0.0.0+8402dfa"
+version = "0.0.0"
 description = "A simple package that houses simple utilities for dealing with common tasks."
-authors = [
-    "bigpick",
-]
+authors = ["bigpick <bigpick@codeplox.dev>"]
 maintainers = ["bigpick <bigpick@codeplox.dev>", "Mike <mike@codeplox.dev"]
 exclude = [ "**/test/*",]
 readme = "README.md"
@@ -32,8 +30,7 @@ classifiers = [
 ]
 
 [[tool.poetry.packages]]
-include = "*"
-from = "plox"
+include = "plox"
 
 [tool.poetry.dependencies]
 python = ">=3.9, <4"

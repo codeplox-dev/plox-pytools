@@ -35,7 +35,7 @@ logger = getLogger(__name__)
 def format_bytes(number_bytes: Union[int, float], metric: bool = False, precision: int = 1) -> str:
     """Format bytes to human readable, using binary (1024) or metric (1000) representation.
 
-    From: https://stackoverflow.com/a/63839503
+    Inspired by: https://stackoverflow.com/a/63839503
 
     Example:
 
@@ -62,32 +62,21 @@ def format_bytes(number_bytes: Union[int, float], metric: bool = False, precisio
     """
     metric_labels = ("B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
     binary_labels = ("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB")
-    precision_offsets = (0.5, 0.05, 0.005, 0.0005)
-    precision_formats = (
-        "{}{:.0f} {}",
-        "{}{:.1f} {}",
-        "{}{:.2f} {}",
-        "{}{:.3f} {}",
-    )
-
-    assert isinstance(number_bytes, (int, float)), "number_bytes must be an int or float"  # noqa: S101
-    assert isinstance(metric, bool), "metric must be a bool"  # noqa: S101
-    assert (  # noqa: S101
-        isinstance(precision, int) and precision >= 0 and precision <= 3
-    ), "precision must be an int (range 0-3)"
+    precision_offset = 5.0 / (10**precision)
 
     unit_labels = metric_labels if metric else binary_labels
     last_label = unit_labels[-1]
     unit_step = 1000 if metric else 1024
-    unit_step_thresh = unit_step - precision_offsets[precision]
+    unit_step_thresh = unit_step - precision_offset
 
-    is_negative = number_bytes < 0
-    if is_negative:  # Faster than ternary assignment or always running abs().
+    maybe_neg = ""
+    if number_bytes < 0:
         number_bytes = abs(number_bytes)
+        maybe_neg = "-"
 
+    unit = "B"
     for unit in unit_labels:
         if number_bytes < unit_step_thresh:
-            # VERY IMPORTANT:
             # Only accepts the CURRENT unit if we're BELOW the threshold where
             # float rounding behavior would place us into the NEXT unit: F.ex.
             # when rounding a float to 1 decimal, any number ">= 1023.95" will
@@ -101,7 +90,7 @@ def format_bytes(number_bytes: Union[int, float], metric: bool = False, precisio
             # and further down in the decimals, so it doesn't matter at all.
             number_bytes /= unit_step
 
-    return precision_formats[precision].format("-" if is_negative else "", number_bytes, unit)  # pyright: ignore
+    return f"{maybe_neg}{number_bytes:.{precision}f} {unit}"
 
 
 def file_contents(path: FilePath) -> str:
