@@ -40,6 +40,7 @@ pick = "*"
 pyright = "*"
 ruff = "*"
 pytest = "*"
+pytest-cov = "*"
 pylint = "*"
 mypy = "*"
 detect-secrets = { git = "https://github.com/ibm/detect-secrets.git", tag = "0.13.1+ibm.62.dss" }
@@ -54,6 +55,7 @@ requires = [ "poetry-core>=1.0.0",]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
+addopts = '--import-mode=importlib --cov-report term-missing --cov=plox -s'
 python_files = "*test*.py"
 markers = [ "integration: marks tests that have external dependencies (deselect with \"-m 'not integration'\")",]
 log_cli = true
