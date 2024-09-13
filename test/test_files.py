@@ -37,7 +37,7 @@ def test_format_bytes_metric():
 
     petabytes = 2000000000000000
     for precision in range(1, 10):
-        assert format_bytes(petabytes, True, precision) == f"2.{"0"*precision} PB"
+        assert format_bytes(petabytes, True, precision) == f"2.{'0'*precision} PB"
 
     assert format_bytes(petabytes, True, 0) == "2 PB"
 
@@ -49,7 +49,7 @@ def test_format_bytes_binary():
 
     pebibytes = 2251799813685247
     for precision in range(1, 10):
-        assert format_bytes(pebibytes, precision=precision) == f"2.{"0"*precision} PiB"
+        assert format_bytes(pebibytes, precision=precision) == f"2.{'0'*precision} PiB"
     assert format_bytes(pebibytes, precision=0) == "2 PiB"
 
     petabytes = 2000000000000000
