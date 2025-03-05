@@ -36,14 +36,13 @@ include = "plox"
 python = ">=3.9, <4"
 pick = "*"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pyright = "*"
 ruff = "*"
 pytest = "*"
 pytest-cov = "*"
 pylint = "*"
 mypy = "*"
-detect-secrets = { git = "https://github.com/ibm/detect-secrets.git", tag = "0.13.1+ibm.62.dss" }
 python-docs-theme = "*"
 Sphinx = "*"
 myst-parser = "*"
