@@ -7,13 +7,14 @@
 
 from __future__ import annotations
 
+from collections.abc import Generator
 from contextlib import contextmanager
 from logging import getLogger
 from os import environ
 from os.path import expandvars
 from pathlib import Path
 from re import compile as re_compile
-from typing import Any, Generator
+from typing import Any
 
 from plox.tools.files import FilePath, file_lines
 

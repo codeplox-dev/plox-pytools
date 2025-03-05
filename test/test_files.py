@@ -1,7 +1,7 @@
 from argparse import ArgumentTypeError
 from os.path import exists, isdir, join, split
 from pathlib import Path
-from re import compile
+from re import compile as re_compile
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 
 from pytest import TEMPFILE_CONTENTS, TEMPFILE_CONTENTS_IGNORED, raises  # type: ignore
@@ -23,7 +23,7 @@ from plox.tools.files import (
 def test_format_bytes_metric():
     assert format_bytes(1, metric=True, precision=0) == "1 B"
     for prec in range(1, 10):
-        assert format_bytes(1, metric=True, precision=prec) == f"1.{'0'*prec} B"
+        assert format_bytes(1, metric=True, precision=prec) == f"1.{'0' * prec} B"
 
     pebibytes = 2251799813685247
     assert format_bytes(pebibytes, True, 7) == "2.2517998 PB"
@@ -37,7 +37,7 @@ def test_format_bytes_metric():
 
     petabytes = 2000000000000000
     for precision in range(1, 10):
-        assert format_bytes(petabytes, True, precision) == f"2.{'0'*precision} PB"
+        assert format_bytes(petabytes, True, precision) == f"2.{'0' * precision} PB"
 
     assert format_bytes(petabytes, True, 0) == "2 PB"
 
@@ -49,7 +49,7 @@ def test_format_bytes_binary():
 
     pebibytes = 2251799813685247
     for precision in range(1, 10):
-        assert format_bytes(pebibytes, precision=precision) == f"2.{'0'*precision} PiB"
+        assert format_bytes(pebibytes, precision=precision) == f"2.{'0' * precision} PiB"
     assert format_bytes(pebibytes, precision=0) == "2 PiB"
 
     petabytes = 2000000000000000
@@ -64,13 +64,10 @@ def test_file_contents(temp_file_creation: Path):
 
 
 def test_bin_file_contents():
-    tempbin = NamedTemporaryFile("wb")
-    tempbin.write(b"hello, world!\ntest")
-    tempbin.seek(0)
-    try:
+    with NamedTemporaryFile("wb") as tempbin:
+        tempbin.write(b"hello, world!\ntest")
+        tempbin.seek(0)
         assert bin_file_contents(tempbin.name) == b"hello, world!\ntest"
-    finally:
-        tempbin.close()
 
 
 def test_file_contents_from_envar(temp_file_creation: Path):
@@ -88,10 +85,12 @@ def test_file_lines(temp_file_creation: Path):
         assert file_lines(temp_file_creation, skip_filtration=False) == TEMPFILE_CONTENTS_IGNORED
 
     def ignore_non_standard():
-        assert file_lines(temp_file_creation, skip_filtration=False, patterns=[compile(".*")]) == []
+        assert (
+            file_lines(temp_file_creation, skip_filtration=False, patterns=[re_compile(".*")]) == []
+        )
 
         assert file_lines(
-            temp_file_creation, skip_filtration=False, patterns=[compile("NOTHING")]
+            temp_file_creation, skip_filtration=False, patterns=[re_compile("NOTHING")]
         ) == TEMPFILE_CONTENTS.split("\n")  # type: ignore
 
     no_ignore()
