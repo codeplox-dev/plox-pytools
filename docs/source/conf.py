@@ -5,14 +5,18 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+"""."""
+
 from __future__ import annotations
 
-import sys
 import os
+import sys
+from typing import Any
 
+from sphinx.application import Sphinx
 
 project = "plox-tools"
-copyright = "2024, codeplox-dev"
+copyright = "2024, codeplox-dev"  # noqa: A001
 author = "codeplox-dev"
 
 highlight_language = "python3"
@@ -35,7 +39,7 @@ extensions = [
 typehints_fully_qualified = False
 always_use_bars_union = True
 autoapi_own_page_level = "module"
-#autodoc_default_options = {"show-inheritance": True, "members": True}
+# autodoc_default_options = {"show-inheritance": True, "members": True}
 autodoc_typehints = "description"
 autodoc_typehints_description_target = "documented_params"
 autodoc_typehints_format = "short"
@@ -50,7 +54,7 @@ autoapi_options = [
 ]
 autoapi_dirs = ["../../plox"]
 autoapi_root = "api"
-#autoapi_member_order = "groupwise"
+# autoapi_member_order = "groupwise"
 autoapi_member_order = "alphabetical"
 autoapi_python_use_implicit_namespaces = True
 autoapi_template_dir = "_templates/autoapi"
@@ -71,7 +75,7 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 intersphinx_mapping = {
-        "python": ("https://docs.python.org/3.12", None),
+    "python": ("https://docs.python.org/3.12", None),
 }
 
 
@@ -79,12 +83,12 @@ intersphinx_mapping = {
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 html_theme = "python_docs_theme"
 html_sidebars = {
-   "**": ["globaltoc.html", "sourcelink.html", "searchbox.html"],
-   "using/windows": ["windows-sidebar.html", "searchbox.html"],
+    "**": ["globaltoc.html", "sourcelink.html", "searchbox.html"],
+    "using/windows": ["windows-sidebar.html", "searchbox.html"],
 }
-#html_theme_options = {
+# html_theme_options = {
 #    "collapsiblesidebar": True,
-#}
+# }
 
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
@@ -96,14 +100,19 @@ sys.path.append(os.path.join(os.path.dirname(__name__), ".."))
 nitpick_ignore = {
     ("py:class", "_T"),
     ("py:class", "TupleVal"),
-    ("py:class", "plox.tools.files.FilePath")
+    ("py:class", "plox.tools.files.FilePath"),
 }
 
-def skip_submodules(app, what, name, obj, skip, options):
+
+def skip_submodules(
+    app: Sphinx, what: Any, name: str, obj: Any, skip: bool, options: dict[str, bool]
+) -> bool:
+    """."""
     if what == "data" and any(x in name for x in {"logger", "TupleVal"}):
         skip = True
     return skip
 
-def setup(sphinx):
-    sphinx.connect("autoapi-skip-member", skip_submodules)
 
+def setup(sphinx: Sphinx) -> int:
+    """."""
+    sphinx.connect("autoapi-skip-member", skip_submodules)
