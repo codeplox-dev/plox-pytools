@@ -1,0 +1,114 @@
+plox.tools.interaction
+======================
+
+.. py:module:: plox.tools.interaction
+
+.. autoapi-nested-parse::
+
+   Methods for user input/interaction/etc.
+
+   .. code-block:: python
+
+       from plox.tools import interaction
+
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   plox.tools.interaction.blue
+   plox.tools.interaction.bold_red
+   plox.tools.interaction.confirm
+   plox.tools.interaction.multi_choice_menu
+   plox.tools.interaction.red
+   plox.tools.interaction.single_choice_menu
+   plox.tools.interaction.yellow
+
+
+Module Contents
+---------------
+
+.. py:function:: blue(msg)
+
+   Wrap an input string so that is is printed with blue coloring escape codes.
+
+
+.. py:function:: bold_red(msg)
+
+   Wrap an input string so that is is printed with bold red coloring escape codes.
+
+
+.. py:function:: confirm(msg, yes_is_default = False, silent = False)
+
+   Get confirmation from a user regarding a message.
+
+   If ``silent=True`` is passed, validation from user input is skipped an
+   method automatically continues.
+
+   .. admonition:: Example
+
+      >>> confirm("Proceed?")
+      Proceed? (y/N) # entered "", default N
+      False
+      
+      >>> confirm("Proceed?")
+      Proceed? (y/N) # entered "y"
+      True
+      
+      >>> confirm("Proceed?", yes_is_default=True)
+      Proceed? (Y/n) # entered "", default Y
+      True
+      
+      >>> confirm("Proceed?", silent=True)
+      True
+
+   :param msg: The prompt to get Y/N input from the user on.
+   :param yes_is_default: Optional, if provided, the default (empty
+                          enter behaviour will be Y)
+   :param silent: Whether or not to skip user input and just return
+                  true immediately.
+
+   :returns: ``True`` if user's response is yes, else ``False``.
+   :rtype: bool
+
+
+.. py:function:: multi_choice_menu(choices, prompt, indicator = '=>')
+
+   Prompt the user with a menu and return a list of (potentially multiple) items they choose.
+
+   :param choices: The list of options to choose from.
+   :param prompt: The prompt to display above the choices in the menu.
+   :param indicator: Indicator icon on left hand side of current selection.
+
+
+.. py:function:: red(msg)
+
+   Wrap an input string so that is is printed with red coloring escape codes.
+
+
+.. py:function:: single_choice_menu(choices, prompt, indicator = '=>', trim_suffix = None)
+
+   Prompt the user with a visual menu and return a single item they choose.
+
+   .. admonition:: Example
+
+      >>> single_choice_menu(["foo", "bar", "baz"], "Pick one")
+      #  < spawns interactive terminal menu, selected foo >
+      'foo'
+
+   :param choices: The list of options to choose from.
+   :param prompt: The prompt to display above the choices in the menu.
+   :param indicator: Indicator icon on left hand side of current selection.
+   :param trim_suffix: Potential suffix to remove from the selected choice.
+                       Default is ``None``. Useful in cases where menuing choices are ordered/sorted
+                       and say for example, the top pick is appened with ``... (latest)`` but you're
+                       still only interested in the ``...``
+
+
+.. py:function:: yellow(msg)
+
+   Wrap an input string so that is is printed with yellow coloring escape codes.
+
+
