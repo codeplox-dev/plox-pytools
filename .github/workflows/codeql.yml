@@ -34,11 +34,11 @@ jobs:
             echo $file
             if [[ $file == plox/* ]]; then
               echo "Detected src code under plox/ modified!"
-              echo "::set-output name=detected_changed_src::true"
+              echo "detected_changed_src=true" >> $GIHTUB_OUTPUT
               return
             fi
           done < files.txt
-          echo "::set-output name=detected_changed_src::false"
+          echo "detected_changed_src=false" >> $GIHTUB_OUTPUT
   scan:
     needs: check_modified
     if: needs.check_modified.outputs.detected_changed_src == 'true'
