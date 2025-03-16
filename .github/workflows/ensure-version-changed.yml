@@ -4,31 +4,27 @@ on:
   pull_request:
 
 jobs:
-  changed_files:
+  check_version_modified:
+    name: Check VERSION modified
     runs-on: ubuntu-latest
-    name: validate
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
           fetch-depth: 0
-
       - name: Base SHA
         id: base-sha
-        run: echo "sha=$(git rev-parse origin/${{ github.event.repository.default_branch }})" >> $GITHUB_OUTPUT
-
-      - name: Ensure VERSION file has been updated.
-        id: changed-version-file
-        uses: tj-actions/changed-files@v46.0.1
-        with:
-          base_sha: "${{ steps.base-sha.outputs.sha }}"
-          files_yaml: |
-            version:
-              - VERSION
-
-      - name: Fail if VERSION file wasn't detected as changed
-        if: steps.changed-version-file.outputs.version_any_changed == 'false'
+        run: echo "sha=$(git rev-parse origin/${{ github.event.pull_request.base.ref }})" >> $GITHUB_OUTPUT
+      - name: check for modified code src files
+        id: check_files
         run: |
-          echo "=> Did not detect VERISON file has been updated."
-          echo "=> Updated the VERSION file, commit, and re-push."
-          exit 1
+          echo "=============== list modified files ==============="
+          git diff --name-only "${{ steps.base-sha.outputs.sha }}" "${{ github.head_ref }}" > files.txt
+          cat files.txt
+
+          echo "========== check paths of modified files =========="
+          while IFS= read -r file; do
+            if [[ $file == VERSION ]]; then
+              return 0
+            fi
+          done < files.txt
+          return -1
