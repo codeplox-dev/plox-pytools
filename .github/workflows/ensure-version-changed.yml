@@ -10,17 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-      - name: Base SHA
-        id: base-sha
-        run: echo "sha=$(git rev-parse origin/${{ github.event.pull_request.base.ref }})" >> $GITHUB_OUTPUT
+          fetch-depth: 2
       - name: check for modified code src files
         id: check_files
         run: |
           echo "=============== list modified files ==============="
-          git diff --name-only "${{ steps.base-sha.outputs.sha }}" "${{ github.sha }}" > files.txt
+          git diff --name-only HEAD^ HEAD > files.txt
           cat files.txt
-
           echo "========== check paths of modified files =========="
           while IFS= read -r file; do
             if [[ $file == VERSION ]]; then
