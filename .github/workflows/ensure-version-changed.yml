@@ -1,11 +1,10 @@
-name: VERSION bump
+name: VERSION
 
 on:
   pull_request:
 
 jobs:
   check_version_modified:
-    name: Check VERSION modified
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
