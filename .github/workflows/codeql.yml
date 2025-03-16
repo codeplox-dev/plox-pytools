@@ -9,11 +9,39 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-    paths:
-      - 'plox/**'
 
 jobs:
+  check_modified:
+    name: Check modified code files
+    outputs:
+      detected_changed_src: ${{ steps.check_files.outputs.detected_changed_src }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: check for modified code src files
+        id: check_files
+        run: |
+          echo "=============== list modified files ==============="
+          git diff --name-only HEAD^ HEAD
+
+          echo "========== check paths of modified files =========="
+          git diff --name-only HEAD^ HEAD &gt; files.txt
+          while IFS= read -r file
+          do
+            echo $file
+            if [[ $file == plox/* ]]; then
+              echo "Detected src code under plox/ modified!"
+              echo "::set-output name=detected_changed_src::true"
+              return
+            fi
+          done &lt; files.txt
+          echo "::set-output name=detected_changed_src::false"
   scan:
+    needs: check_modified
+    if: needs.check_modified.outputs.detected_changed_src == 'true'
     runs-on: ubuntu-latest
     permissions:
       # required for all workflows
