@@ -27,6 +27,7 @@ jobs:
         shell: bash
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
+          mkdir -p ${HOME}/.config/direnv || true
           cat temp/direnv_support > ${HOME}/.config/direnv/direnvrc
           sudo apt-get autoremove --purge -yq curl
       - name: mypy-check
@@ -55,6 +56,7 @@ jobs:
         shell: bash
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
+          mkdir -p ${HOME}/.config/direnv || true
           cat temp/direnv_support > ${HOME}/.config/direnv/direnvrc
           sudo apt-get autoremove --purge -yq curl
       - name: lint
@@ -93,6 +95,7 @@ jobs:
             shopt -s expand_aliases
             alias make=gmake
           fi
+          mkdir -p ${HOME}/.config/direnv || true
           cat temp/direnv_support > ${HOME}/.config/direnv/direnvrc
           direnv allow . && eval "$(direnv export bash)"
           make test-unit
@@ -126,6 +129,7 @@ jobs:
             shopt -s expand_aliases
             alias make=gmake
           fi
+          mkdir -p ${HOME}/.config/direnv || true
           cat temp/direnv_support > ${HOME}/.config/direnv/direnvrc
           git config --global init.defaultBranch main
           git config --global user.email urmom@fake.com
@@ -168,8 +172,13 @@ jobs:
         run: |
           sudo apt-get update &>/dev/null
           sudo apt-get install -yq direnv git make curl &>/dev/null
+          # enable direnv support for uv for now
+          mkdir -p ${HOME}/.config/direnv || true
+          cat temp/direnv_support > ${HOME}/.config/direnv/direnvrc
+          # install uv
           curl -LsSf https://astral.sh/uv/install.sh | sh
           sudo apt-get autoremove --purge -yq curl
+          # publish (maybe)
           git config --global init.defaultBranch main
           git config --global user.email urmom@fake.com
           git config --global user.name "Your mom"
