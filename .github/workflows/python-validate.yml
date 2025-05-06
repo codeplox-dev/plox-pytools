@@ -159,10 +159,11 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: 3.12
+          python-version-file: ".python-version"
       - name: Get Pull Request Number
         id: pr
         run: echo "pull_request_number=$(gh pr view --json number -q .number || echo "")" >> $GITHUB_OUTPUT
