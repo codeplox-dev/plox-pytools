@@ -47,8 +47,8 @@ dev = [
     "pre-commit"
 ]
 
-[tool.uv]
-default-groups = []
+#[tool.uv]
+#default-groups = []
 
 [[tool.uv.index]]
 name = "pypi"
