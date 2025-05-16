@@ -1,0 +1,10 @@
+layout_uv() {
+  # Watch the uv configuration file for changes
+  watch_file .python-version pyproject.toml uv.lock
+
+  # Use --frozen so that direnv entry does not change the lock contents. This
+  # can fail if the lock file is badly out of sync, but it'll report that to the
+  # user and the resolution is obvious.
+  uv sync --frozen &>/dev/null || echo "Bad uv.lock state; Be sure to run 'uv sync!'"
+  direnv_load uv run --no-sync direnv dump
+}

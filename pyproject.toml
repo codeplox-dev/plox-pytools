@@ -1,11 +1,9 @@
-[tool.poetry]
+[project]
 name = "plox-tools"
+authors = [{ name = "bigpick",  email = "bigpick@codeplox.dev"}]
+maintainers = [{ name = "bigpick",  email = "bigpick@codeplox.dev"}, { name = "Mike", email = "mike@codeplox.dev"}]
 version = "0.0.0"
 description = "A simple package that houses simple utilities for dealing with common tasks."
-authors = ["bigpick <bigpick@codeplox.dev>"]
-maintainers = ["bigpick <bigpick@codeplox.dev>", "Mike <mike@codeplox.dev"]
-exclude = [ "**/test/*",]
-readme = "README.md"
 classifiers = [
   # How mature is this project? Common values are
   #   3 - Alpha
@@ -18,7 +16,7 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
 
   # Pick your license as you wish (see also "license" above)
-  "License :: OSI Approved :: BSD 2-Clause \"Simplified\" License (BSD-2-Clause)",
+  "License :: OSI Approved :: MIT License",
 
   # Specify the Python versions you support here.
   "Programming Language :: Python :: 3",
@@ -28,30 +26,53 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
 ]
+readme = "README.md"
+requires-python = ">=3.9"
 
-[[tool.poetry.packages]]
-include = "plox"
+dependencies = ["pick"]
 
-[tool.poetry.dependencies]
-python = ">=3.9, <4"
-pick = "*"
+[dependency-groups]
+dev = [
+    "pyright",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+    "pylint",
+    "mypy",
+    "python-docs-theme",
+    "Sphinx",
+    "myst-parser",
+    "sphinx-autoapi",
+    "sphinx-autodoc-typehints",
+    "pre-commit"
+]
 
-[tool.poetry.group.dev.dependencies]
-pyright = "*"
-ruff = "*"
-pytest = "*"
-pytest-cov = "*"
-pylint = "*"
-mypy = "*"
-python-docs-theme = "*"
-Sphinx = "*"
-myst-parser = "*"
-sphinx-autoapi = "*"
-sphinx-autodoc-typehints = "*"
+#[tool.uv]
+#default-groups = []
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple/"
+publish-url = "https://upload.pypi.org/legacy/"
+explicit = true
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
+
+[tool.hatch.build.targets.sdist]
+include = ["plox"]
+exclude = ["**/test/*"]
+
+[tool.hatch.build.targets.wheel]
+include = ["plox"]
+exclude = ["**/test/*"]
 
 [build-system]
-requires = [ "poetry-core>=1.0.0",]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
 addopts = '--import-mode=importlib --cov-report term-missing --cov=plox -s'
